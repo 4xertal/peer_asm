@@ -30,17 +30,17 @@ def tax_band(nci):
     Calculate the tax payable while considering different tax bands.
     """
     if nci <= 50000:                 # Calulate under Progressive Tax rates
-        return int(round(nci * 0.02))
-    elif 50001 <= nci <= 100000:
-        return int(round(1000 + (nci - 50000) * 0.06))
-    elif 100001 <= nci <= 150000:
-        return int(round(4000 + (nci - 100000) * 0.1))
-    elif 150001 <= nci <= 200000:
-        return int(round(9000 + (nci - 150000) * 0.14))
-    elif 200001 <= nci < 3144000:	
-        return int(round(16000 + (nci - 200000) * 0.17))
+        return round(nci * 0.02)
+    elif 50001 <= nci <= 100000:     # First Tax bracket
+        return round(1000 + (nci - 50000) * 0.06)
+    elif 100001 <= nci <= 150000:    # Second Tax bracket
+        return round(4000 + (nci - 100000) * 0.1)
+    elif 150001 <= nci <= 200000:    # Third Tax bracket
+        return round(9000 + (nci - 150000) * 0.14)
+    elif 200001 <= nci < 3144000:    # Fourth (remainder) Tax bracket
+        return round(16000 + (nci - 200000) * 0.17)
     elif 3144000 <= nci:             # Calculate under Standard Tax rate
-        return int(round(nci * 0.15))
+        return round(nci * 0.15)
 
 def tax_calc(net_income, joint = False):
     """
@@ -104,7 +104,13 @@ def show_output(result):
     print ("Should joint assessment be recommended? %s" % ("Yes, joint assessment is recommended." if result["joint"] else "No, joint assessment is not recommended."))
 
 if __name__ == "__main__":
-    print ("Salaries Tax Calculator (Based on requirements from Hong Kong Inland Revenue Department (HKIRD) ~ 2021-22)")
+    print ("""
+    Salaries Tax Computation                                                        
+                                                                                    
+    Based on requirements from Hong Kong Inland Revenue Department (HKIRD)            
+    Year of Assessment: 2021/22                                                      
+    Martial Status: Married (Default)\n
+    """)
     data = get_input()
     result = tax_output(data)
     show_output(result)
