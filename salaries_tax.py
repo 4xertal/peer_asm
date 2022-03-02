@@ -20,7 +20,7 @@ def NCI(net_income, joint = False):
     """
     Calculate the Net Chargeable Income (after deducting Tax Allowance)
     """
-    allowance = 132000               #132000 if seperated assessment is assumed.
+    allowance = 132000               #132000 if separated assessment is assumed.
     if joint:
         allowance *= 2               #264000 if joint assessment is assumed.
     return max(net_income - allowance, 0)
@@ -29,7 +29,7 @@ def tax_band(nci):
     """
     Calculate the tax payable while considering different tax bands.
     """
-    if nci <= 50000:                 # Calulate under Progressive Tax rates
+    if nci <= 50000:                 # Calculate under Progressive Tax rates
         return round(nci * 0.02)
     elif 50001 <= nci <= 100000:     # First Tax bracket
         return round(1000 + (nci - 50000) * 0.06)
@@ -44,7 +44,7 @@ def tax_band(nci):
 
 def tax_calc(net_income, joint = False):
     """
-    Seperated assessment and Joint assessment calculation
+    Separated assessment and Joint assessment calculation
     """
     tax_payment = tax_band(NCI(net_income, joint))
     return int(tax_payment)          # the tax payable calculated should be in integer type.
@@ -53,8 +53,8 @@ def tax_output(data):
     """
     Generate output data: 
     (1) Calculated MPF mandatory contribution based on personal income (using output["husband_mpf"], output["wife_mpf"], type: int)
-    (2) Salaries Tax to be paid if seperate assessment assumed (using output["husband_tax"], output["wife_tax"], type: int)
-    (3) Salaries Tax to be paid if joint assessment assumed (using output["combined_tax"], type: int)
+    (2) Salaries Tax to be paid if separate assessment assumed (using output["husband_tax"], output["wife_tax"], type: int)
+    (3) Salaries Tax to be paid if joint assessment assumed (using output["joint_tax"], type: int)
     (4) Recommendation: whether joint assessment should be recommended (using output["joint"], type: bool)
     """
     output = {
@@ -62,13 +62,13 @@ def tax_output(data):
         "husband_mpf": MPF(data["husband_income"]),
         "wife_tax": 0,
         "wife_mpf": MPF(data["wife_income"]),
-        "combined_tax": 0,
+        "joint_tax": 0,
         "joint": False,
     }
     output["husband_tax"] = tax_calc(net_income(data["husband_income"]))
     output["wife_tax"]  = tax_calc(net_income(data["wife_income"]))
-    output["combined_tax"] = tax_calc(net_income(data["husband_income"]) + net_income(data["wife_income"]), joint = True)
-    output["joint"] = (output["husband_tax"] + output["wife_tax"]) > output["combined_tax"]
+    output["joint_tax"] = tax_calc(net_income(data["husband_income"]) + net_income(data["wife_income"]), joint = True)
+    output["joint"] = (output["husband_tax"] + output["wife_tax"]) > output["joint_tax"]
     return output
     
 def get_input():
@@ -92,7 +92,7 @@ def show_output(result):
     """
     print output data: 
     (1) Calculated MPF mandatory contribution based on personal income (in line 89, 91)
-    (2) Salaries Tax to be paid if seperate assessment assumed (in line 90, 92)
+    (2) Salaries Tax to be paid if separate assessment assumed (in line 90, 92)
     (3) Salaries Tax to be paid if joint assessment assumed (in line 93)
     (4) Recommendation: whether joint assessment should be recommended (in line 94)
     """
@@ -100,7 +100,7 @@ def show_output(result):
     print ("The amount of Salaries Tax payable by husband if separate assessment assumed is $%d.\n" % result["husband_tax"])
     print ("The amount of MPF mandatory contribution based on wife's personal income is $%d.\n" % result["wife_mpf"])
     print ("The amount of Salaries Tax payable by wife if separate assessment assumed is $%d.\n" % result["wife_tax"])
-    print ("The amount of Salaries Tax payable if joint assessment assumed is $%d.\n" % result["combined_tax"])
+    print ("The amount of Salaries Tax payable if joint assessment assumed is $%d.\n" % result["joint_tax"])
     print ("Should joint assessment be recommended? %s" % ("Yes, joint assessment is recommended." if result["joint"] else "No, joint assessment is not recommended."))
 
 if __name__ == "__main__":
