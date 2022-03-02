@@ -1,5 +1,3 @@
-import pytest
-
 def MPF(total_income):
     """
     Calculate the amount of MPF mandatory contribution based on husband's and wife's personal income
