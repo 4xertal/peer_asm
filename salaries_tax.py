@@ -4,7 +4,7 @@ def MPF(total_income):
     """
     Calculate the amount of MPF mandatory contribution based on husband's and wife's personal income
     """
-    income = round(total_income)     # rounding the number to 0 d.p.
+    income = round(total_income)     # rounding the total income to 0 decimal place
     if total_income < 85200:         # if annual income is below $85200, the amount of MPF contribution is 0.
         return 0
     return round(min(18000, total_income * 0.05))
