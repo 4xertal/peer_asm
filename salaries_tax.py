@@ -105,11 +105,10 @@ def show_output(result):
 
 if __name__ == "__main__":
     print ("""
-    Salaries Tax Computation                                                        
-                                                                                    
-    Based on requirements from Hong Kong Inland Revenue Department (HKIRD)            
-    Year of Assessment: 2021/22                                                      
-    Martial Status: Married (Default)\n
+Salaries Tax Computation                                                                                                                                     
+Based on requirements from Hong Kong Inland Revenue Department (HKIRD)            
+Year of Assessment: 2021/22                                                      
+Martial Status: Married (Default)\n
     """)
     data = get_input()
     result = tax_output(data)
