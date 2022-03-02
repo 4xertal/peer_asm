@@ -104,12 +104,12 @@ def show_output(result):
     print ("Should joint assessment be recommended? %s" % ("Yes, joint assessment is recommended." if result["joint"] else "No, joint assessment is not recommended."))
 
 if __name__ == "__main__":
-    print ("""
+    print (
+"""
 Salaries Tax Computation                                                                                                                                     
 Based on requirements from Hong Kong Inland Revenue Department (HKIRD)            
 Year of Assessment: 2021/22                                                      
-Martial Status: Married (Default)\n
-    """)
+Martial Status: Married (Default)\n""")
     data = get_input()
     result = tax_output(data)
     show_output(result)
