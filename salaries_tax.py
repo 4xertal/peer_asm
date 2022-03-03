@@ -1,3 +1,4 @@
+
 def MPF(total_income):
     """
     Calculate the amount of MPF mandatory contribution based on husband's and wife's personal income
@@ -5,47 +6,56 @@ def MPF(total_income):
     income = round(total_income)     # rounding the total income to 0 decimal place
     if total_income < 85200:         # if annual income is below $85200, the amount of MPF contribution is 0.
         return 0
-    return round(min(18000, total_income * 0.05))
+    total_income = int(round(total_income * 0.05))
+    return min(18000, total_income)
         
 def net_income(total_income):
     """
     Calculate the net total income after MPF deduction
     """
-    total_income = round(total_income)
-    return round(total_income - MPF(total_income))
+    total_income = int(round(total_income - MPF(total_income)))
+    return total_income
 
 def NCI(net_income, joint = False):
     """
     Calculate the Net Chargeable Income (after deducting Tax Allowance)
     """
+    net_income = int(net_income)
     allowance = 132000               #132000 if separated assessment is assumed.
     if joint:
         allowance *= 2               #264000 if joint assessment is assumed.
-    return max(net_income - allowance, 0)
+    net_income = int(round(net_income - allowance))
+    return max(net_income, 0)
 
 def tax_band(nci):
     """
     Calculate the tax payable while considering different tax bands.
     """
     if nci <= 50000:                 # Calculate under Progressive Tax rates
-        return round(nci * 0.02)
+        nci = int(round(nci * 0.02))
+        return nci
     elif 50001 <= nci <= 100000:     # First Tax bracket
-        return round(1000 + (nci - 50000) * 0.06)
+        nci = int(round(1000 + (nci - 50000) * 0.06))
+        return nci
     elif 100001 <= nci <= 150000:    # Second Tax bracket
-        return round(4000 + (nci - 100000) * 0.1)
+        nci = int(round(4000 + (nci - 100000) * 0.1))
+        return nci
     elif 150001 <= nci <= 200000:    # Third Tax bracket
-        return round(9000 + (nci - 150000) * 0.14)
+        nci = int(round(9000 + (nci - 150000) * 0.14))
+        return nci
     elif 200001 <= nci < 3144000:    # Fourth (remainder) Tax bracket
-        return round(16000 + (nci - 200000) * 0.17)
+        nci = int(round(16000 + (nci - 200000) * 0.17))
+        return nci
     elif 3144000 <= nci:             # Calculate under Standard Tax rate
-        return round(nci * 0.15)
+        nci = int(round(nci * 0.15))
+        return nci
 
 def tax_calc(net_income, joint = False):
     """
     Separated assessment and Joint assessment calculation
     """
     tax_payment = tax_band(NCI(net_income, joint))
-    return int(tax_payment)          # the tax payable calculated should be in integer type.
+    return int(tax_payment)          # the tax payable calculated should be in integer type.  
 
 def tax_output(data):
     """
@@ -79,11 +89,14 @@ def get_input():
     }
 
     def income(role):
-        return int(input("Please type in %s annual income: " % role))
+        personal_income = int(input("Please type in %s annual income: " % role))
+        if personal_income < 0:     # Error#1: if any inputted income is below $0, raise ValueError and prompt error message.
+            raise ValueError("Please rerun the program and type in the correct annual income. The salary should not be below $0.")
+        return personal_income
 
     data["husband_income"] = income("Husband's")
     data["wife_income"] = income("Wife's")
-
+    
     return data                        # inputted data store in data
 
 def show_output(result):
