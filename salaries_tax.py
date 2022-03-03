@@ -1,3 +1,4 @@
+
 def MPF(total_income):
     """
     Calculate the amount of MPF mandatory contribution based on husband's and wife's personal income
@@ -66,6 +67,9 @@ def tax_calc(net_income, joint = False):
     if net_income < 3144000:
         if standard_tax(net_income) < tax_band(NCI(net_income)):
             tax_payable = standard_tax(net_income)
+            return int(tax_payable)  
+        tax_payable = tax_band(NCI(net_income, joint))
+        return int(tax_payable)  
     tax_payable = tax_band(NCI(net_income, joint))
     return int(tax_payable)          # the tax payable calculated should be in integer type.  
 
