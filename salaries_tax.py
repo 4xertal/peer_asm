@@ -122,11 +122,11 @@ def show_output(result):
     (3) Salaries Tax to be paid if joint assessment assumed (in line 93)
     (4) Recommendation: whether joint assessment should be recommended (in line 94)
     """
-    print ("\nThe amount of MPF mandatory contribution based on husband's personal income is $%d.\n" % result["husband_mpf"])
-    print ("The amount of Salaries Tax payable by husband if separate assessment assumed is $%d.\n" % result["husband_tax"])
-    print ("The amount of MPF mandatory contribution based on wife's personal income is $%d.\n" % result["wife_mpf"])
-    print ("The amount of Salaries Tax payable by wife if separate assessment assumed is $%d.\n" % result["wife_tax"])
-    print ("The amount of Salaries Tax payable if joint assessment assumed is $%d.\n" % result["joint_tax"])
+    print ("\nThe amount of MPF mandatory contribution based on husband's personal income is $%s.\n" % '{:,}'.format(result["husband_mpf"]))
+    print ("The amount of Salaries Tax payable by husband if separate assessment assumed is $%s.\n" % '{:,}'.format(result["husband_tax"]))
+    print ("The amount of MPF mandatory contribution based on wife's personal income is $%s.\n" % '{:,}'.format(result["wife_mpf"]))
+    print ("The amount of Salaries Tax payable by wife if separate assessment assumed is $%s.\n" % '{:,}'.format(result["wife_tax"]))
+    print ("The amount of Salaries Tax payable if joint assessment assumed is $%s.\n" % '{:,}'.format(result["joint_tax"]))
     print ("Should joint assessment be recommended? %s" % ("Yes, joint assessment is recommended." if result["joint"] else "No, joint assessment is not recommended."))
 
 if __name__ == "__main__":
