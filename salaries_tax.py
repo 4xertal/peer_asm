@@ -75,14 +75,9 @@ def tax_calc(net_income, joint = False):
     """
     Separated assessment and Joint assessment calculation
     """
-
-    if standard_tax(net_income) < tax_band(NCI(net_income)):
-        tax_payable = standard_tax(net_income)
-        return int(tax_payable)  
-    
-    elif standard_tax(net_income) >= tax_band(NCI(net_income)):
-        tax_payable = tax_band(NCI(net_income, joint))
-        return int(tax_payable)  
+    standard_tax_payable = standard_tax(net_income)
+    progressive_tax_payable = tax_band(NCI(net_income, joint))
+    return int(min(standard_tax_payable, progressive_tax_payable))  
 
 def tax_output(data):
     """
