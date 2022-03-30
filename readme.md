@@ -1,6 +1,4 @@
-302 Pair Programming Assignment
-
-
+302 Pair Programming Assignment - 
 Salaries Tax Calculator 
 
 
